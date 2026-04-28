@@ -20,6 +20,18 @@ export function Navbar() {
 
   useEffect(() => setMounted(true), []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
@@ -234,29 +246,30 @@ export function Navbar() {
         {mobileOpen ? <X size={18} /> : <Menu size={18} />}
       </button>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay — fully opaque to prevent tap-through */}
       {mobileOpen && (
         <div
-          className="glass-heavy"
           style={{
             position: "fixed",
             top: "var(--nav-height)",
             left: 0,
             right: 0,
             bottom: 0,
+            background: "var(--bg-primary)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "2rem",
+            gap: "2.5rem",
             zIndex: 999,
+            padding: "2rem",
           }}
         >
           {navLinks.map((link) => {
             const isActive =
               !link.external && pathname === link.href;
 
-            const commonStyle = {
+            const commonStyle: React.CSSProperties = {
               textDecoration: "none",
               fontSize: "1.5rem",
               fontWeight: isActive ? 700 : 500,
@@ -264,6 +277,12 @@ export function Navbar() {
                 ? "var(--accent)"
                 : "var(--text-primary)",
               letterSpacing: "-0.01em",
+              padding: "0.5rem 1.5rem",
+              borderRadius: "var(--radius-md)",
+              transition: "background var(--transition-fast)",
+              width: "100%",
+              maxWidth: "280px",
+              textAlign: "center",
             };
 
             if (link.external) {
@@ -299,8 +318,9 @@ export function Navbar() {
               style={{
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
-                padding: "10px 20px",
+                padding: "12px 24px",
                 borderRadius: "var(--radius-md)",
                 border: "1px solid var(--border)",
                 background: "var(--bg-surface)",
@@ -308,6 +328,8 @@ export function Navbar() {
                 color: "var(--text-secondary)",
                 fontSize: "1rem",
                 fontFamily: "var(--font-body)",
+                width: "100%",
+                maxWidth: "280px",
               }}
             >
               {theme === "dark" ? (
