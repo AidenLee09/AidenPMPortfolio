@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,6 +12,10 @@ import {
   TrendingUp,
   Zap,
 } from "lucide-react";
+import {
+  ImageLightbox,
+  InspectableImage,
+} from "@/components/ImageLightbox";
 
 /* ═══════════════════════════════════════════════════════════════
    Type Definitions
@@ -84,7 +89,13 @@ function SprintIcon({ id }: { id: string }) {
   return <Zap size={size} color={color} />;
 }
 
-function SprintPanel({ sprint }: { sprint: Sprint }) {
+function SprintPanel({
+  sprint,
+  onImageOpen,
+}: {
+  sprint: Sprint;
+  onImageOpen: (src: string, alt: string, caption?: string) => void;
+}) {
   return (
     <div
       style={{
@@ -171,26 +182,14 @@ function SprintPanel({ sprint }: { sprint: Sprint }) {
 
       {/* Sprint Image */}
       {sprint.image && (
-        <div
-          style={{
-            borderRadius: "var(--radius-sm)",
-            overflow: "hidden",
-            border: "1px solid var(--border)",
-          }}
-        >
-          <Image
-            src={sprint.image}
-            alt={sprint.title}
-            width={600}
-            height={340}
-            style={{
-              width: "100%",
-              height: "auto",
-              display: "block",
-              objectFit: "cover",
-            }}
-          />
-        </div>
+        <InspectableImage
+          src={sprint.image}
+          alt={sprint.title}
+          caption={`Analysis: ${sprint.subtitle} // ${sprint.title}`}
+          width={600}
+          height={340}
+          onOpen={onImageOpen}
+        />
       )}
 
       {/* Formula */}
@@ -235,6 +234,17 @@ export function ProjectCard({
   secondaryCta,
   variant = "standard",
 }: ProjectCardProps) {
+  const [lightbox, setLightbox] = useState<{
+    src: string;
+    alt: string;
+    caption?: string;
+  } | null>(null);
+
+  const openLightbox = (src: string, alt: string, caption?: string) => {
+    setLightbox({ src, alt, caption });
+  };
+
+  const closeLightbox = () => setLightbox(null);
   /* ── Placeholder variant ───────────────────────────────── */
   if (variant === "placeholder") {
     return (
@@ -312,6 +322,7 @@ export function ProjectCard({
   /* ── Featured variant ──────────────────────────────────── */
   if (variant === "featured") {
     return (
+      <>
       <div
         className="glass-card"
         style={{
@@ -392,29 +403,19 @@ export function ProjectCard({
 
           {/* MVP Image */}
           {image && (
-            <div
-              style={{
-                borderRadius: "var(--radius-md)",
-                overflow: "hidden",
-                border: "1px solid var(--border)",
+            <InspectableImage
+              src={image}
+              alt={title}
+              caption={`Overview: ${title} // MVP Architecture`}
+              width={420}
+              height={240}
+              containerStyle={{
                 maxWidth: "420px",
                 width: "100%",
                 flexShrink: 0,
               }}
-            >
-              <Image
-                src={image}
-                alt={title}
-                width={420}
-                height={240}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  objectFit: "cover",
-                }}
-              />
-            </div>
+              onOpen={openLightbox}
+            />
           )}
 
           {/* Tags */}
@@ -445,7 +446,11 @@ export function ProjectCard({
             }}
           >
             {sprints.map((sprint) => (
-              <SprintPanel key={sprint.id} sprint={sprint} />
+              <SprintPanel
+                key={sprint.id}
+                sprint={sprint}
+                onImageOpen={openLightbox}
+              />
             ))}
           </div>
         )}
@@ -637,6 +642,16 @@ export function ProjectCard({
           </span>
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      <ImageLightbox
+        src={lightbox?.src ?? ""}
+        alt={lightbox?.alt ?? ""}
+        caption={lightbox?.caption}
+        isOpen={lightbox !== null}
+        onClose={closeLightbox}
+      />
+    </>
     );
   }
 
