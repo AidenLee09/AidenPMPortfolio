@@ -1,0 +1,403 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   AidenPortfolio.dev — Design Token System
+   Theme: "Nordic Slate" (Light) / "Cyber Indigo" (Dark)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Light Mode: Nordic Slate ──────────────────────────────── */
+:root {
+  --bg-primary: oklch(98% 0.01 240);
+  --bg-secondary: oklch(95% 0.012 240);
+  --bg-surface: oklch(96% 0.01 240);
+  --bg-glass: oklch(97% 0.01 240 / 0.55);
+  --bg-glass-heavy: oklch(95% 0.01 240 / 0.7);
+  --bg-card: oklch(99% 0.005 240);
+  --bg-card-hover: oklch(97% 0.01 240);
+
+  --accent: oklch(60% 0.15 250);
+  --accent-hover: oklch(55% 0.17 250);
+  --accent-subtle: oklch(60% 0.15 250 / 0.1);
+  --accent-glow: oklch(60% 0.15 250 / 0.15);
+
+  --text-primary: oklch(20% 0.02 240);
+  --text-secondary: oklch(45% 0.02 240);
+  --text-tertiary: oklch(60% 0.015 240);
+  --text-accent: oklch(50% 0.15 250);
+
+  --border: oklch(90% 0.008 240);
+  --border-subtle: oklch(92% 0.005 240);
+  --border-accent: oklch(60% 0.15 250 / 0.3);
+
+  --shadow-sm: 0 1px 3px oklch(20% 0.02 240 / 0.06);
+  --shadow-md: 0 4px 16px oklch(20% 0.02 240 / 0.08);
+  --shadow-lg: 0 8px 32px oklch(20% 0.02 240 / 0.1);
+  --shadow-glow: 0 0 24px oklch(60% 0.15 250 / 0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  --nav-height: 72px;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Dark Mode: Cyber Indigo ───────────────────────────────── */
+.dark {
+  --bg-primary: oklch(14% 0.025 265);
+  --bg-secondary: oklch(17% 0.03 265);
+  --bg-surface: oklch(19% 0.035 265);
+  --bg-glass: oklch(16% 0.03 265 / 0.6);
+  --bg-glass-heavy: oklch(14% 0.03 265 / 0.75);
+  --bg-card: oklch(18% 0.035 265);
+  --bg-card-hover: oklch(22% 0.04 265);
+
+  --accent: oklch(68% 0.18 260);
+  --accent-hover: oklch(73% 0.20 260);
+  --accent-subtle: oklch(68% 0.18 260 / 0.12);
+  --accent-glow: oklch(68% 0.18 260 / 0.2);
+
+  --text-primary: oklch(95% 0.008 260);
+  --text-secondary: oklch(72% 0.015 260);
+  --text-tertiary: oklch(55% 0.015 260);
+  --text-accent: oklch(72% 0.18 260);
+
+  --border: oklch(26% 0.035 265);
+  --border-subtle: oklch(22% 0.025 265);
+  --border-accent: oklch(68% 0.18 260 / 0.3);
+
+  --shadow-sm: 0 1px 3px oklch(5% 0.02 265 / 0.3);
+  --shadow-md: 0 4px 16px oklch(5% 0.02 265 / 0.4);
+  --shadow-lg: 0 8px 32px oklch(5% 0.02 265 / 0.5);
+  --shadow-glow: 0 0 32px oklch(68% 0.18 260 / 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Base & Reset
+   ═══════════════════════════════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+  line-height: 1.6;
+  min-height: 100dvh;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Glassmorphism Utilities
+   ═══════════════════════════════════════════════════════════════ */
+
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-heavy {
+  background: var(--bg-glass-heavy);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base),
+              box-shadow var(--transition-base),
+              border-color var(--transition-base),
+              background-color var(--transition-slow);
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+    border-color: var(--border);
+  }
+  50% {
+    opacity: 0.85;
+    border-color: var(--accent);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-color: var(--accent); }
+  50% { border-color: transparent; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s var(--transition-base) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out both;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent-subtle) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Staggered children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-up 0.5s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   Typography
+   ═══════════════════════════════════════════════════════════════ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Custom Utility Classes
+   ═══════════════════════════════════════════════════════════════ */
+
+.accent-line {
+  position: relative;
+}
+.accent-line::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width var(--transition-base);
+}
+.accent-line:hover::after {
+  width: 100%;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
+  border-radius: 999px;
+  transition: all var(--transition-fast);
+}
+
+.tag:hover {
+  background: var(--accent-glow);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Formula styling */
+.formula {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-accent);
+  background: var(--accent-subtle);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-accent);
+  display: inline-block;
+}
+
+/* Metric chip */
+.metric-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+.metric-chip:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-glow);
+}
+.metric-chip .metric-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+}
+.metric-chip .metric-value {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-accent);
+}
+
+/* Sprint status indicators */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.status-dot.complete {
+  background: oklch(70% 0.17 150);
+  box-shadow: 0 0 8px oklch(70% 0.17 150 / 0.4);
+}
+.status-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+.status-dot.upcoming {
+  background: var(--text-tertiary);
+}
+
+/* Grid scanline effect on dark mode */
+.dark .scanline-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: oklch(68% 0.18 260 / 0.06);
+  animation: scan-line 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Scrollbar Styling
+   ═══════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Selection
+   ═══════════════════════════════════════════════════════════════ */
+
+::selection {
+  background: var(--accent);
+  color: oklch(100% 0 0);
+}
