@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -32,6 +33,13 @@ export function ImageLightbox({
     [onClose]
   );
 
+  // Portal mount target
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleKey);
@@ -43,7 +51,9 @@ export function ImageLightbox({
     };
   }, [isOpen, handleKey]);
 
-  return (
+  if (!portalTarget) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -82,11 +92,11 @@ export function ImageLightbox({
             }}
             aria-label="Close image viewer"
             style={{
-              position: "absolute",
+              position: "fixed",
               top: "1.5rem",
               right: "1.5rem",
-              width: "40px",
-              height: "40px",
+              width: "44px",
+              height: "44px",
               borderRadius: "var(--radius-sm)",
               border: "1px solid var(--border)",
               background: "var(--bg-surface)",
@@ -96,7 +106,7 @@ export function ImageLightbox({
               cursor: "pointer",
               color: "var(--text-secondary)",
               transition: "all var(--transition-fast)",
-              zIndex: 10000,
+              zIndex: 10001,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = "var(--accent)";
@@ -109,7 +119,7 @@ export function ImageLightbox({
               e.currentTarget.style.boxShadow = "none";
             }}
           >
-            <X size={18} />
+            <X size={20} />
           </motion.button>
 
           {/* Image Container */}
@@ -175,7 +185,8 @@ export function ImageLightbox({
           )}
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    portalTarget
   );
 }
 
