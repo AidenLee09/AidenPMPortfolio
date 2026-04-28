@@ -183,6 +183,11 @@ export default function HomePage() {
           variant="featured"
           span="full"
           image="/MVP.png"
+          primaryCta={{
+            label: "Launch Live Lab",
+            href: "https://omni.aidenportfolio.dev",
+            external: true,
+          }}
         />
       </section>
 

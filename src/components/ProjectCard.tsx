@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   Activity,
+  ExternalLink,
   Flame,
   FlaskConical,
   Loader,
@@ -39,6 +41,8 @@ export interface ProjectCardProps {
   span?: "1x1" | "2x2" | "full";
   variant?: "featured" | "standard" | "placeholder";
   image?: string;
+  primaryCta?: { label: string; href: string; external?: boolean };
+  secondaryCta?: { label: string; href: string; external?: boolean };
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -227,6 +231,8 @@ export function ProjectCard({
   sprints,
   tags,
   image,
+  primaryCta,
+  secondaryCta,
   variant = "standard",
 }: ProjectCardProps) {
   /* ── Placeholder variant ───────────────────────────────── */
@@ -441,6 +447,167 @@ export function ProjectCard({
             {sprints.map((sprint) => (
               <SprintPanel key={sprint.id} sprint={sprint} />
             ))}
+          </div>
+        )}
+
+        {/* Dual-Action CTAs */}
+        {(primaryCta || secondaryCta) && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "1rem",
+              paddingTop: "0.75rem",
+              borderTop: "1px solid var(--border)",
+            }}
+          >
+            {primaryCta && (
+              <a
+                href={primaryCta.href}
+                target={primaryCta.external ? "_blank" : undefined}
+                rel={primaryCta.external ? "noopener noreferrer" : undefined}
+                title={
+                  primaryCta.external
+                    ? "Opens the live interactive dashboard in a new tab."
+                    : undefined
+                }
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 20px",
+                  borderRadius: "999px",
+                  border: "1px solid oklch(60% 0.15 250 / 0.4)",
+                  background: "oklch(60% 0.15 250 / 0.08)",
+                  textDecoration: "none",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  fontFamily: "var(--font-mono)",
+                  letterSpacing: "0.01em",
+                  color: "var(--text-primary)",
+                  cursor: "pointer",
+                  transition: "all var(--transition-fast)",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor =
+                    "oklch(60% 0.15 250 / 0.7)";
+                  e.currentTarget.style.background =
+                    "oklch(60% 0.15 250 / 0.14)";
+                  e.currentTarget.style.boxShadow =
+                    "0 0 20px oklch(60% 0.15 250 / 0.18)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor =
+                    "oklch(60% 0.15 250 / 0.4)";
+                  e.currentTarget.style.background =
+                    "oklch(60% 0.15 250 / 0.08)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                {/* Live pulse */}
+                <span
+                  style={{
+                    position: "relative",
+                    display: "inline-flex",
+                    width: "8px",
+                    height: "8px",
+                    flexShrink: 0,
+                  }}
+                >
+                  <span
+                    className="lab-ping"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "50%",
+                      background: "oklch(60% 0.15 250)",
+                      opacity: 0.6,
+                    }}
+                  />
+                  <span
+                    style={{
+                      position: "relative",
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      background: "oklch(60% 0.15 250)",
+                    }}
+                  />
+                </span>
+                {primaryCta.label}
+                {primaryCta.external && (
+                  <ExternalLink size={13} style={{ opacity: 0.5 }} />
+                )}
+              </a>
+            )}
+
+            {secondaryCta && (
+              secondaryCta.external ? (
+                <a
+                  href={secondaryCta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    textDecoration: "none",
+                    fontSize: "0.85rem",
+                    fontWeight: 500,
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--text-secondary)",
+                    cursor: "pointer",
+                    transition: "color var(--transition-fast)",
+                    padding: "10px 4px",
+                    borderBottom: "1px solid transparent",
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--accent)";
+                    e.currentTarget.style.borderBottomColor = "var(--accent)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-secondary)";
+                    e.currentTarget.style.borderBottomColor = "transparent";
+                  }}
+                >
+                  {secondaryCta.label}
+                  <span style={{ fontSize: "0.7em" }}>→</span>
+                </a>
+              ) : (
+                <Link
+                  href={secondaryCta.href}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    textDecoration: "none",
+                    fontSize: "0.85rem",
+                    fontWeight: 500,
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--text-secondary)",
+                    cursor: "pointer",
+                    transition: "color var(--transition-fast)",
+                    padding: "10px 4px",
+                    borderBottom: "1px solid transparent",
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--accent)";
+                    e.currentTarget.style.borderBottomColor = "var(--accent)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-secondary)";
+                    e.currentTarget.style.borderBottomColor = "transparent";
+                  }}
+                >
+                  {secondaryCta.label}
+                  <span style={{ fontSize: "0.7em" }}>→</span>
+                </Link>
+              )
+            )}
           </div>
         )}
 

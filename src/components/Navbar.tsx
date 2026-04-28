@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -185,6 +185,77 @@ export function Navbar() {
           );
         })}
 
+        {/* Launch Lab CTA */}
+        <a
+          href="https://omni.aidenportfolio.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="launch-lab-cta"
+          className="launch-lab-btn"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "7px 16px",
+            borderRadius: "999px",
+            border: "1px solid oklch(60% 0.15 250 / 0.3)",
+            background: "transparent",
+            textDecoration: "none",
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            fontFamily: "var(--font-mono)",
+            letterSpacing: "0.02em",
+            color: "var(--text-primary)",
+            cursor: "pointer",
+            transition: "all var(--transition-fast)",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "oklch(60% 0.15 250 / 0.7)";
+            e.currentTarget.style.background = "oklch(60% 0.15 250 / 0.08)";
+            e.currentTarget.style.boxShadow =
+              "0 0 16px oklch(60% 0.15 250 / 0.15)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "oklch(60% 0.15 250 / 0.3)";
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          {/* Live Pulse Indicator */}
+          <span
+            style={{
+              position: "relative",
+              display: "inline-flex",
+              width: "8px",
+              height: "8px",
+              flexShrink: 0,
+            }}
+          >
+            <span
+              className="lab-ping"
+              style={{
+                position: "absolute",
+                inset: 0,
+                borderRadius: "50%",
+                background: "oklch(60% 0.15 250)",
+                opacity: 0.6,
+              }}
+            />
+            <span
+              style={{
+                position: "relative",
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                background: "oklch(60% 0.15 250)",
+              }}
+            />
+          </span>
+          Launch Lab
+          <ExternalLink size={12} style={{ opacity: 0.5 }} />
+        </a>
+
         {/* Theme Toggle */}
         {mounted && (
           <button
@@ -311,6 +382,64 @@ export function Navbar() {
               </Link>
             );
           })}
+
+          {/* Launch Lab CTA — Mobile */}
+          <a
+            href="https://omni.aidenportfolio.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileOpen(false)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+              textDecoration: "none",
+              fontSize: "1.1rem",
+              fontWeight: 600,
+              fontFamily: "var(--font-mono)",
+              color: "var(--text-primary)",
+              padding: "12px 24px",
+              borderRadius: "999px",
+              border: "1px solid oklch(60% 0.15 250 / 0.4)",
+              background: "oklch(60% 0.15 250 / 0.06)",
+              width: "100%",
+              maxWidth: "280px",
+            }}
+          >
+            <span
+              style={{
+                position: "relative",
+                display: "inline-flex",
+                width: "8px",
+                height: "8px",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                className="lab-ping"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  background: "oklch(60% 0.15 250)",
+                  opacity: 0.6,
+                }}
+              />
+              <span
+                style={{
+                  position: "relative",
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  background: "oklch(60% 0.15 250)",
+                }}
+              />
+            </span>
+            Launch Lab
+            <ExternalLink size={14} style={{ opacity: 0.5 }} />
+          </a>
+
           {mounted && (
             <button
               onClick={toggleTheme}
@@ -345,6 +474,19 @@ export function Navbar() {
 
       {/* Responsive styles */}
       <style jsx global>{`
+        @keyframes lab-ping {
+          0% {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+          75%, 100% {
+            transform: scale(2.2);
+            opacity: 0;
+          }
+        }
+        .lab-ping {
+          animation: lab-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
         @media (max-width: 768px) {
           .desktop-nav {
             display: none !important;
