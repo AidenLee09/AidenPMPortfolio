@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   Activity,
   Flame,
@@ -26,6 +27,7 @@ export interface Sprint {
   formula?: string;
   metrics?: SprintMetric[];
   status: "complete" | "active" | "upcoming";
+  image?: string;
 }
 
 export interface ProjectCardProps {
@@ -36,6 +38,7 @@ export interface ProjectCardProps {
   tags?: string[];
   span?: "1x1" | "2x2" | "full";
   variant?: "featured" | "standard" | "placeholder";
+  image?: string;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -162,6 +165,30 @@ function SprintPanel({ sprint }: { sprint: Sprint }) {
         {sprint.description}
       </p>
 
+      {/* Sprint Image */}
+      {sprint.image && (
+        <div
+          style={{
+            borderRadius: "var(--radius-sm)",
+            overflow: "hidden",
+            border: "1px solid var(--border)",
+          }}
+        >
+          <Image
+            src={sprint.image}
+            alt={sprint.title}
+            width={600}
+            height={340}
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      )}
+
       {/* Formula */}
       {sprint.formula && (
         <div className="formula">{sprint.formula}</div>
@@ -199,6 +226,7 @@ export function ProjectCard({
   description,
   sprints,
   tags,
+  image,
   variant = "standard",
 }: ProjectCardProps) {
   /* ── Placeholder variant ───────────────────────────────── */
@@ -310,10 +338,10 @@ export function ProjectCard({
             alignItems: "flex-start",
             justifyContent: "space-between",
             flexWrap: "wrap",
-            gap: "1rem",
+            gap: "1.5rem",
           }}
         >
-          <div style={{ maxWidth: "640px" }}>
+          <div style={{ maxWidth: "640px", flex: "1 1 400px" }}>
             {subtitle && (
               <div
                 style={{
@@ -355,6 +383,33 @@ export function ProjectCard({
               {description}
             </p>
           </div>
+
+          {/* MVP Image */}
+          {image && (
+            <div
+              style={{
+                borderRadius: "var(--radius-md)",
+                overflow: "hidden",
+                border: "1px solid var(--border)",
+                maxWidth: "420px",
+                width: "100%",
+                flexShrink: 0,
+              }}
+            >
+              <Image
+                src={image}
+                alt={title}
+                width={420}
+                height={240}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          )}
 
           {/* Tags */}
           {tags && tags.length > 0 && (

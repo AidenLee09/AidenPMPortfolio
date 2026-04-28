@@ -19,6 +19,7 @@ const omniChannelSprints: Sprint[] = [
       { label: "Confidence Band", value: "92.4%" },
     ],
     status: "complete",
+    image: "/sprint 2.png",
   },
   {
     id: "sprint-3",
@@ -32,6 +33,7 @@ const omniChannelSprints: Sprint[] = [
       { label: "Days-to-Break", value: "42d" },
     ],
     status: "active",
+    image: "/sprint 3.png",
   },
 ];
 
@@ -180,6 +182,7 @@ export default function HomePage() {
           ]}
           variant="featured"
           span="full"
+          image="/MVP.png"
         />
       </section>
 

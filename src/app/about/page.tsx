@@ -4,14 +4,9 @@ import {
   Briefcase,
   GraduationCap,
   Rocket,
-  Cpu,
-  Code2,
-  Database,
-  PenTool,
-  Sparkles,
-  BarChart3,
-  Layout,
+  Wrench,
 } from "lucide-react";
+import { SkillsMatrix } from "@/components/SkillsMatrix";
 
 export const metadata: Metadata = {
   title: "About",
@@ -20,72 +15,152 @@ export const metadata: Metadata = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   Data
+   Data Structures
    ═══════════════════════════════════════════════════════════════ */
 
-interface TimelineEntry {
+interface BulletPoint {
+  label: string;
+  detail: string;
+}
+
+interface ArchiveEntry {
   role: string;
   org: string;
-  detail: string;
   period?: string;
+  bullets: BulletPoint[];
 }
 
-interface SkillItem {
-  label: string;
-  icon: React.ReactNode;
-}
+/* ── Professional Experience ─────────────────────────────────── */
 
-const professional: TimelineEntry[] = [
+const professional: ArchiveEntry[] = [
   {
-    role: "Product Manager",
+    role: "Product Manager Intern",
     org: "Cox Automotive",
-    detail:
-      "Driving product strategy for dealer-facing platforms. Leading cross-functional sprint ceremonies, defining OKRs, and translating stakeholder requirements into data-backed feature roadmaps.",
     period: "Current",
+    bullets: [
+      {
+        label: "Feature Orchestration",
+        detail:
+          "Spearheaded the end-to-end design and deployment of three strategic feature sets, introducing a centralized modular interface that eliminated cross-platform fragmentation and significantly reduced user task-latency.",
+      },
+      {
+        label: "Cross-Functional Alignment",
+        detail:
+          "Acted as the central node between Engineering, UX, and QA workstreams to synthesize technical requirements, ensuring 100% alignment on product vision from discovery through delivery.",
+      },
+      {
+        label: "Agile Lifecycle Management",
+        detail:
+          "Optimized delivery velocity using Rally to architect epics and user stories, maintaining a rigorous Agile cadence and gaining deep proficiency in high-performance product lifecycle management.",
+      },
+    ],
   },
   {
     role: "Area Manager Intern",
     org: "Amazon Operations",
-    detail:
-      "Managed end-to-end warehouse operations across shift cycles. Applied lean principles and Six Sigma methodology to optimize throughput and reduce cycle time in fulfillment workflows.",
     period: "Internship",
+    bullets: [
+      {
+        label: "Throughput Optimization",
+        detail:
+          "Engineered a strategic overhaul of the inbound freight pipeline, utilizing Lean principles to drive a 10%+ increase in daily throughput and operational velocity.",
+      },
+      {
+        label: "Human Capital Leadership",
+        detail:
+          "Directed a high-volume team of 40+ associates, fostering a performance-driven culture through active feedback loops and precise communication to meet aggressive operational KPIs.",
+      },
+      {
+        label: "Fiscal Impact & Process Improvement",
+        detail:
+          "Identified and executed a structural process redesign for warehouse logistics, resulting in a verified $50,000 annual cost reduction in asset management.",
+      },
+      {
+        label: "Operational Integrity",
+        detail:
+          "Managed high-precision reporting and end-of-day documentation, ensuring data accuracy across all mission-critical operational metrics.",
+      },
+    ],
   },
 ];
 
-const academic: TimelineEntry[] = [
+/* ── Academic ────────────────────────────────────────────────── */
+
+const academic: ArchiveEntry[] = [
   {
     role: "Industrial & Systems Engineering",
     org: "Kennesaw State University",
-    detail:
-      "Concentration in Optimization & Facility Planning. Coursework in operations research, stochastic modeling, supply chain design, and human factors engineering.",
     period: "B.S.",
+    bullets: [
+      {
+        label: "Optimization & Facility Planning",
+        detail:
+          "Concentration in quantitative optimization, stochastic modeling, supply chain design, and human factors engineering.",
+      },
+      {
+        label: "Applied Research",
+        detail:
+          "Coursework in operations research, simulation, and data-driven decision frameworks for complex industrial systems.",
+      },
+    ],
   },
 ];
 
-const entrepreneurial: TimelineEntry[] = [
+/* ── Entrepreneurial (Service Logic Lab) ─────────────────────── */
+
+const entrepreneurial: ArchiveEntry[] = [
   {
-    role: "Founder",
+    role: "Founder & Lead Architect",
     org: "Luxe Computers",
-    detail:
-      "Built a custom PC assembly and consulting business from scratch. Managed sourcing, pricing strategy, client relations, and technical support operations.",
+    bullets: [
+      {
+        label: "Data-Driven Operations",
+        detail:
+          "Leveraged historical performance metrics and predictive modeling to optimize operational workflows and forecast resource requirements against fluctuating market demand.",
+      },
+      {
+        label: "Full-Cycle Venture Management",
+        detail:
+          "Direct oversight of the comprehensive business stack, including fiscal architecture, human capital management, and multi-channel growth strategies.",
+      },
+      {
+        label: "Strategic Value Engineering",
+        detail:
+          "Analyzed hardware market volatility to architect value-added service tiers, driving significant revenue growth through high-margin custom solutions.",
+      },
+      {
+        label: "Solution Architecture",
+        detail:
+          "Acted as a lead technical consultant, translating complex client requirements into optimized hardware configurations and performance-tuned systems.",
+      },
+    ],
   },
   {
-    role: "Founder",
+    role: "Founder & Operations Lead",
     org: "Luxe Pressure Washing LLC",
-    detail:
-      "Launched and scaled a service-based business. Developed operational workflows, client acquisition funnels, and financial forecasting models for seasonal demand patterns.",
+    bullets: [
+      {
+        label: "Client Needs Assessment",
+        detail:
+          "Implemented a consultative sales framework to diagnose maintenance requirements and maximize Life Time Value (LTV) through strategic service upselling.",
+      },
+      {
+        label: "Operational Scaling",
+        detail:
+          "Architected the foundational HR and payroll infrastructure, successfully transitioning the enterprise from a founder-operator model to a scalable, employee-managed operation.",
+      },
+      {
+        label: "Acquisition Optimization",
+        detail:
+          "Directed and refined multi-platform ad campaigns, utilizing A/B testing and conversion tracking to minimize Customer Acquisition Cost (CAC) and maximize lead velocity.",
+      },
+      {
+        label: "Asset Maintenance Strategy",
+        detail:
+          "Developed and executed a preventative maintenance protocol for industrial equipment to ensure near-zero operational downtime and maximum asset longevity.",
+      },
+    ],
   },
-];
-
-const skills: SkillItem[] = [
-  { label: "Next.js", icon: <Layout size={16} /> },
-  { label: "React", icon: <Code2 size={16} /> },
-  { label: "Python", icon: <Cpu size={16} /> },
-  { label: "SQL", icon: <Database size={16} /> },
-  { label: "AutoCAD", icon: <PenTool size={16} /> },
-  { label: "Data Analysis", icon: <BarChart3 size={16} /> },
-  { label: "Vibe Coding", icon: <Sparkles size={16} /> },
-  { label: "TypeScript", icon: <Code2 size={16} /> },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -95,9 +170,11 @@ const skills: SkillItem[] = [
 function SectionHeader({
   icon,
   label,
+  sublabel,
 }: {
   icon: React.ReactNode;
   label: string;
+  sublabel?: string;
 }) {
   return (
     <div
@@ -105,7 +182,7 @@ function SectionHeader({
         display: "flex",
         alignItems: "center",
         gap: "12px",
-        marginBottom: "1.5rem",
+        marginBottom: "2rem",
       }}
     >
       <div
@@ -124,123 +201,178 @@ function SectionHeader({
       >
         {icon}
       </div>
-      <h2
-        style={{
-          fontSize: "1.25rem",
-          fontWeight: 700,
-          letterSpacing: "-0.02em",
-        }}
-      >
-        {label}
-      </h2>
+      <div>
+        <h2
+          style={{
+            fontSize: "1.3rem",
+            fontWeight: 800,
+            letterSpacing: "-0.04em",
+            lineHeight: 1.2,
+          }}
+        >
+          {label}
+        </h2>
+        {sublabel && (
+          <span
+            style={{
+              fontSize: "0.7rem",
+              fontFamily: "var(--font-mono)",
+              fontWeight: 500,
+              color: "var(--text-tertiary)",
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+            }}
+          >
+            {sublabel}
+          </span>
+        )}
+      </div>
       <div
         style={{
           flex: 1,
           height: "1px",
           background: "var(--border)",
+          marginLeft: "4px",
         }}
       />
     </div>
   );
 }
 
-function TimelineCard({ entry }: { entry: TimelineEntry }) {
+function ArchiveCard({
+  entry,
+  variant = "default",
+}: {
+  entry: ArchiveEntry;
+  variant?: "default" | "lab";
+}) {
+  const isLab = variant === "lab";
+
   return (
     <div
       className="glass-card"
       style={{
-        padding: "1.5rem",
+        padding: "2rem",
         display: "flex",
-        gap: "1.25rem",
+        flexDirection: "column",
+        gap: "1.5rem",
+        borderLeft: isLab
+          ? "3px solid var(--accent)"
+          : "3px solid var(--border)",
+        borderRadius: "var(--radius-lg)",
         position: "relative",
+        background: isLab ? "var(--accent-subtle)" : undefined,
+        boxShadow: isLab ? "inset 0 0 0 1px var(--border-accent)" : undefined,
       }}
     >
-      {/* Timeline dot and line */}
+      {/* Role Header */}
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: "4px",
-          flexShrink: 0,
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "8px",
         }}
       >
-        <div
-          style={{
-            width: "10px",
-            height: "10px",
-            borderRadius: "50%",
-            background: "var(--accent)",
-            boxShadow: "0 0 10px var(--accent-glow)",
-            flexShrink: 0,
-          }}
-        />
-        <div
-          style={{
-            width: "2px",
-            flex: 1,
-            background:
-              "linear-gradient(to bottom, var(--accent), transparent)",
-            marginTop: "4px",
-            borderRadius: "1px",
-          }}
-        />
-      </div>
-
-      {/* Content */}
-      <div style={{ flex: 1 }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "8px",
-            marginBottom: "6px",
-          }}
-        >
+        <div>
           <h3
             style={{
-              fontSize: "1.05rem",
-              fontWeight: 700,
-              letterSpacing: "-0.01em",
+              fontSize: "1.15rem",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.3,
+              marginBottom: "4px",
             }}
           >
             {entry.role}
           </h3>
-          {entry.period && (
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.8rem",
+              fontWeight: 600,
+              color: "var(--accent)",
+              letterSpacing: "0.01em",
+            }}
+          >
+            {entry.org}
+          </div>
+        </div>
+        {entry.period && (
+          <span
+            className="tag"
+            style={{ fontSize: "0.65rem", flexShrink: 0 }}
+          >
+            {entry.period}
+          </span>
+        )}
+      </div>
+
+      {/* Bullet Points — geometric dashes */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}
+      >
+        {entry.bullets.map((bullet) => (
+          <div
+            key={bullet.label}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto 1fr",
+              gap: "12px",
+              alignItems: "start",
+            }}
+          >
+            {/* Geometric accent marker */}
             <span
-              className="tag"
               style={{
+                color: "var(--accent)",
                 fontSize: "0.65rem",
+                fontWeight: 700,
+                lineHeight: "1.8rem",
+                userSelect: "none",
+                flexShrink: 0,
               }}
             >
-              {entry.period}
+              ▪
             </span>
-          )}
-        </div>
-        <div
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            color: "var(--accent)",
-            marginBottom: "0.75rem",
-            letterSpacing: "0.01em",
-          }}
-        >
-          {entry.org}
-        </div>
-        <p
-          style={{
-            fontSize: "0.875rem",
-            lineHeight: 1.75,
-            color: "var(--text-secondary)",
-            margin: 0,
-          }}
-        >
-          {entry.detail}
-        </p>
+            <div>
+              <span
+                style={{
+                  fontWeight: 700,
+                  fontSize: "0.875rem",
+                  letterSpacing: "-0.01em",
+                  color: "var(--text-primary)",
+                }}
+              >
+                {bullet.label}
+              </span>
+              <span
+                style={{
+                  color: "var(--text-tertiary)",
+                  fontWeight: 400,
+                  margin: "0 6px",
+                }}
+              >
+                —
+              </span>
+              <span
+                style={{
+                  fontSize: "0.875rem",
+                  lineHeight: 1.85,
+                  color: "oklch(from var(--text-secondary) l c h / 0.8)",
+                  fontWeight: 400,
+                }}
+              >
+                {bullet.detail}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -254,7 +386,7 @@ export default function AboutPage() {
   return (
     <div
       style={{
-        maxWidth: "900px",
+        maxWidth: "920px",
         margin: "0 auto",
         padding: "0 clamp(1rem, 4vw, 3rem)",
       }}
@@ -308,8 +440,8 @@ export default function AboutPage() {
             style={{
               fontSize: "clamp(2rem, 4.5vw, 3rem)",
               fontWeight: 800,
-              letterSpacing: "-0.04em",
-              lineHeight: 1.1,
+              letterSpacing: "-0.05em",
+              lineHeight: 1.08,
               marginBottom: "1rem",
             }}
           >
@@ -322,23 +454,23 @@ export default function AboutPage() {
           <p
             style={{
               fontSize: "clamp(0.95rem, 1.6vw, 1.05rem)",
-              lineHeight: 1.75,
-              color: "var(--text-secondary)",
+              lineHeight: 1.8,
+              color: "oklch(from var(--text-secondary) l c h / 0.8)",
               maxWidth: "540px",
             }}
           >
-            A structured overview of experience across product management,
-            industrial engineering, and entrepreneurship.
+            A structured record of execution across product management,
+            industrial systems engineering, and venture-scale entrepreneurship.
           </p>
         </div>
 
         <div style={{ flexShrink: 0 }}>
-          <div 
-            className="glass-card" 
-            style={{ 
-              padding: "0.5rem", 
+          <div
+            className="glass-card"
+            style={{
+              padding: "0.5rem",
               borderRadius: "calc(var(--radius-xl) + 4px)",
-              width: "fit-content"
+              width: "fit-content",
             }}
           >
             <Image
@@ -355,129 +487,114 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Professional ─────────────────────────────────── */}
+      {/* ── Professional Experience ──────────────────────── */}
       <section
-        className="animate-fade-up stagger-children"
+        className="animate-fade-up"
         style={{
-          marginBottom: "3rem",
+          marginBottom: "3.5rem",
           animationDelay: "0.15s",
         }}
       >
         <SectionHeader
           icon={<Briefcase size={20} />}
-          label="Professional"
+          label="Professional Experience"
+          sublabel="Corporate · Operations"
         />
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "1rem",
+            gap: "1.25rem",
           }}
         >
           {professional.map((entry) => (
-            <TimelineCard key={entry.org} entry={entry} />
+            <ArchiveCard key={entry.org} entry={entry} />
           ))}
         </div>
       </section>
 
       {/* ── Academic ──────────────────────────────────────── */}
       <section
-        className="animate-fade-up stagger-children"
+        className="animate-fade-up"
         style={{
-          marginBottom: "3rem",
+          marginBottom: "3.5rem",
           animationDelay: "0.25s",
         }}
       >
         <SectionHeader
           icon={<GraduationCap size={20} />}
-          label="Academic"
+          label="Academic Foundation"
+          sublabel="Engineering · Research"
         />
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "1rem",
+            gap: "1.25rem",
           }}
         >
           {academic.map((entry) => (
-            <TimelineCard key={entry.org} entry={entry} />
+            <ArchiveCard key={entry.org} entry={entry} />
           ))}
         </div>
       </section>
 
-      {/* ── Entrepreneurial ──────────────────────────────── */}
+      {/* ── Entrepreneurial — Service Logic Lab ──────────── */}
       <section
-        className="animate-fade-up stagger-children"
+        className="animate-fade-up"
         style={{
-          marginBottom: "3rem",
+          marginBottom: "3.5rem",
           animationDelay: "0.35s",
         }}
       >
         <SectionHeader
           icon={<Rocket size={20} />}
-          label="Entrepreneurial"
+          label="Service Logic Lab"
+          sublabel="Ventures · Self-Directed"
         />
+
+        {/* Lab context callout */}
+        <div
+          className="glass-card"
+          style={{
+            padding: "1rem 1.5rem",
+            marginBottom: "1.25rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            borderLeft: "3px solid var(--accent)",
+            borderRadius: "var(--radius-md)",
+          }}
+        >
+          <Wrench size={16} style={{ color: "var(--accent)", flexShrink: 0 }} />
+          <span
+            style={{
+              fontSize: "0.8rem",
+              lineHeight: 1.7,
+              color: "oklch(from var(--text-secondary) l c h / 0.8)",
+              fontFamily: "var(--font-mono)",
+            }}
+          >
+            Self-funded ventures built from zero — applying product thinking to
+            real-world service delivery and hardware operations.
+          </span>
+        </div>
+
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "1rem",
+            gap: "1.25rem",
           }}
         >
           {entrepreneurial.map((entry) => (
-            <TimelineCard key={entry.org} entry={entry} />
+            <ArchiveCard key={entry.org} entry={entry} variant="lab" />
           ))}
         </div>
       </section>
 
       {/* ── Skills Matrix ────────────────────────────────── */}
-      <section
-        className="animate-fade-up"
-        style={{
-          marginBottom: "clamp(3rem, 6vh, 5rem)",
-          animationDelay: "0.45s",
-        }}
-      >
-        <SectionHeader
-          icon={<Cpu size={20} />}
-          label="Skills Matrix"
-        />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fill, minmax(150px, 1fr))",
-            gap: "0.75rem",
-          }}
-        >
-          {skills.map((skill) => (
-            <div
-              key={skill.label}
-              className="glass-card"
-              style={{
-                padding: "1rem 1.25rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                cursor: "default",
-              }}
-            >
-              <span style={{ color: "var(--accent)", display: "flex" }}>
-                {skill.icon}
-              </span>
-              <span
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: 600,
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {skill.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </section>
+      <SkillsMatrix />
     </div>
   );
 }
