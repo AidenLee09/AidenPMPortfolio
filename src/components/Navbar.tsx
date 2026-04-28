@@ -352,6 +352,11 @@ export function Navbar() {
           .mobile-menu-btn {
             display: flex !important;
           }
+          header.glass {
+            background: var(--bg-primary) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </header>
