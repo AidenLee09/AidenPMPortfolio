@@ -328,18 +328,16 @@ function ArchiveCard({
             }}
           >
             {/* Geometric accent marker */}
-            <span
+            <div
               style={{
-                color: "var(--accent)",
-                fontSize: "0.65rem",
-                fontWeight: 700,
-                lineHeight: "1.8rem",
-                userSelect: "none",
+                width: "6px",
+                height: "6px",
+                background: "var(--accent)",
+                marginTop: "0.6rem",
                 flexShrink: 0,
+                borderRadius: "1px",
               }}
-            >
-              ▪
-            </span>
+            />
             <div>
               <span
                 style={{
