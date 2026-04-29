@@ -57,8 +57,6 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          {/* Scanline overlay for dark mode futuristic feel */}
-          <div className="scanline-overlay" />
 
           <Navbar />
 
